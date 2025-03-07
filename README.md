@@ -27,8 +27,8 @@
     - extract_features  # embeddings提取器
     - logger.py  # 自定义日志记录器
     - utils  # 公共基础方法，如计算向量相似度等
-add_prev_data.py  # 增加用于比较的图像向量的脚本
-server.py  # 用于启动本地接口服务
+- add_prev_data.py  # 增加用于比较的图像向量的脚本
+- server.py  # 用于启动本地接口服务
 ```
 
 ## 2. Install
