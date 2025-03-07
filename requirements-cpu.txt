@@ -1,0 +1,9 @@
+torch
+torchvision
+transformers
+flask
+numpy
+pandas
+pillow
+requests
+faiss-cpu
