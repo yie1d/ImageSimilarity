@@ -7,8 +7,8 @@
 - examples
     - 1.png  # 用于举例的图片
     - 2.png  # 用户举例的图片
-    - example1  # 示例1，仅调用的示例
-    - example2  # 示例2，作为服务时的调用示例
+    - example1.py  # 示例1，仅调用的示例
+    - example2.py  # 示例2，作为服务时的调用示例
 - images  # 用于存放计算图像向量的文件目录
     - class1  # 类别名1
         - img1.png
@@ -23,10 +23,10 @@
         - dinov2-base
         - vit-large-patch16-224-in21k
     - api.py  # 相似度推理器
-    - exceptions  # 自定义异常
-    - extract_features  # embeddings提取器
+    - exceptions.py  # 自定义异常
+    - extract_features.py  # embeddings提取器
     - logger.py  # 自定义日志记录器
-    - utils  # 公共基础方法，如计算向量相似度等
+    - utils.py  # 公共基础方法，如计算向量相似度等
 - add_prev_data.py  # 增加用于比较的图像向量的脚本
 - server.py  # 用于启动本地接口服务
 ```
