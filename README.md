@@ -1,0 +1,2 @@
+# ImageSimilarity
+通过VIT及Dino_V2获取图像的embeddings，再通过faiss计算目标图像与已知图像的距离，得到最相似的结果。
