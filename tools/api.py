@@ -42,11 +42,11 @@ class ImageSimilarityInference:
                 else:
                     feature = self.dinov2_extractor.extract(convert_bytes_to_image(image_data_buf))
 
-                _class, _distance = classify_by_features(feature, self.prev_embeddings_df, extract_func=extract_func)
+                _class, _score = classify_by_features(feature, self.prev_embeddings_df, extract_func=extract_func)
                 # 如果这里需要过滤返回结果，建议阈值使用0.65
                 image_classify_dict[image_id] = {
                     'class': _class,
-                    'distance': f'{_distance:.3f}'
+                    'score': f'{_score:.3f}'
                 }
         except Exception as e:
             self.logger.info(f'图标分类异常: {e}')

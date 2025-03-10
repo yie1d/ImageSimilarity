@@ -74,6 +74,6 @@ if __name__ == '__main__':
         image_data_buf = f.read()
     feature = extractor.extract(convert_bytes_to_image(image_data_buf))
     embeddings_df = pd.read_csv('./embeddings/icon_embeddings_prev.csv')
-    _class, _distance = classify_by_features(feature, database_embeddings_df=embeddings_df, extract_func=extract_func)
-    print(_class, _distance)
+    _class, _score = classify_by_features(feature, database_embeddings_df=embeddings_df, extract_func=extract_func)
+    print(_class, _score)
     
