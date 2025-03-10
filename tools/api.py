@@ -20,7 +20,7 @@ class ImageSimilarityInference:
             logger_obj = get_logger(__name__, Path(__file__).parent.parent.joinpath('logs'))
         self.logger = logger_obj
 
-    def inference(self, req_data: dict):
+    def inference(self, req_data: dict) -> t.Dict[str, t.Dict[str, t.Union[str, float]]]:
         """图标分类"""
         extract_func = req_data.get('extract_func', 'dinov2').lower()
         if extract_func not in ['dinov2', 'vit']:
