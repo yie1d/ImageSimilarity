@@ -29,18 +29,21 @@ def clean_feature_string(feature_str: str) -> np.ndarray:
 
 def get_top_k_similar(input_embedding: np.ndarray, database_features: np.ndarray, k=5) -> t.List[t.Tuple[int, float]]:
     """通过FAISS计算最相似的K个结果"""
-    input_embedding = input_embedding.reshape(1, -1)
+    # 归一化输入向量
+    input_normalized = input_embedding / np.linalg.norm(input_embedding, axis=1, keepdims=True)
+    input_normalized = input_normalized.reshape(1, -1)
 
     # 归一化特征向量的余弦相似度
-    features_normalized = database_features / np.linalg.norm(database_features, axis=1, keepdims=True)
+    database_normalized = database_features / np.linalg.norm(database_features, axis=1, keepdims=True)
 
+    # 内积距离
     faiss_index = faiss.IndexFlatIP(database_features.shape[1])
-    faiss_index.add(features_normalized)
+    faiss_index.add(database_normalized)
 
     # 搜索前K个最相似的结果
-    distances, top_k_idx = faiss_index.search(input_embedding, k)
+    distances, top_k_idx = faiss_index.search(input_normalized, k)
 
-    # 返回前k个结果的索引和距离
+    # 返回前k个结果的索引和相似度
     return [(idx, distances[0][inx]) for inx, idx in enumerate(top_k_idx[0])]
 
 
@@ -48,9 +51,11 @@ def classify_by_features(
         input_embedding: np.ndarray,
         database_embeddings_df: pd.DataFrame,
         extract_func: str = 'dinov2'
-) -> t.Tuple[str, float]:
+) -> t.Tuple[t.Optional[str], float]:
     """通过预先生成的特征向量文件对目标进行分类"""
     features = np.array([clean_feature_string(_) for _ in database_embeddings_df[extract_func].values])
-    inx, distance = get_top_k_similar(input_embedding, features, k=1)[0]
+    top_similar = get_top_k_similar(input_embedding, features, k=1)[0]
+    if not top_similar:
+        return None, 0
 
-    return database_embeddings_df['class'][inx], distance
+    return database_embeddings_df['class'][top_similar[0]], top_similar[1]
